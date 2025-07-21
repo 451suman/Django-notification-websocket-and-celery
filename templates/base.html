@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Notifications</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #notifications {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .notification {
+            background-color: #e9ffe9;
+            border-left: 5px solid #28a745;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Admin Dashboard - Live Order Notifications</h1>
+    <div id="notifications">
+        <strong>Notifications will appear below:</strong>
+    </div>
+
+    <script>
+        const notificationsContainer = document.getElementById('notifications');
+
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/chat/admin/');
+
+        socket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            console.log("data =", data);
+            console.log("data type =", data.type);
+            if (data.type === 'admin_notification') {
+                const message = data.message;
+                console.log('Received message:', message);
+
+                const notificationElement = document.createElement('div');
+                notificationElement.classList.add('notification');
+                notificationElement.innerText = message;
+
+                notificationsContainer.appendChild(notificationElement);
+            }
+        };
+
+        socket.onclose = function (e) {
+            console.error('WebSocket closed unexpectedly');
+        };
+    </script>
+</body>
+
+</html>
