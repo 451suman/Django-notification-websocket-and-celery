@@ -23,5 +23,5 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     async def admin_order_created(self, event):
         message = event["message"]
         await self.send(
-            text_data=json.dumps({"type": "admin_notification", "message": message})
+            text_data=json.dumps({"type": "a_notification", "message": message})
         )

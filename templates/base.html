@@ -40,10 +40,17 @@
         <strong>Notifications will appear below:</strong>
     </div>
 
+
+
     <script>
         const notificationsContainer = document.getElementById('notifications');
 
-        const socket = new WebSocket('ws://' + window.location.host + '/ws/chat/admin/');
+        // Use "admin" as the room name
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/notifications/admin/');
+
+        socket.onopen = function (e) {
+            console.log('WebSocket connection established');
+        };
 
         socket.onmessage = function (e) {
             const data = JSON.parse(e.data);
