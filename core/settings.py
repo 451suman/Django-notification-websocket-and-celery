@@ -15,6 +15,7 @@ import platform
 from pathlib import Path
 from dotenv import load_dotenv
 
+
 def load_env(os_name):
     """Loads environment variables based on the operating system using suitable methods.
 
@@ -70,6 +71,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # third_party app
     "django_celery_results",
+    "django_celery_beat",
     # local app
     "app",
 ]

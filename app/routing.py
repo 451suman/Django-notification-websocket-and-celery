@@ -6,4 +6,8 @@ websocket_urlpatterns = [
         r"^ws/notifications/(?P<room_name>\w+)/$",
         consumers.NotificationConsumer.as_asgi(),
     ),
+    re_path(
+        r"^ws/corntab/(?P<room_name>\w+)/$",
+        consumers.CorntabConsumer.as_asgi(),
+    ),
 ]

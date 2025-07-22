@@ -20,3 +20,13 @@ app.autodiscover_tasks()
 @app.task(bind=True, ignore_result=True)
 def debug_task(self):
     print(f"Request: {self.request!r}")
+
+
+from celery.schedules import crontab
+
+app.conf.beat_schedule = {
+    "get-all-orders": {
+        "task": "app.tasks.get_all_orders",
+        "schedule": crontab(minute="*/1"),  # every 5 minutes
+    },
+}

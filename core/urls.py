@@ -18,9 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from app.views import IndexView
+from app.views import CornTabView, IndexView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", IndexView.as_view()),
+    path("corntab/", CornTabView.as_view(), name="corntab"),
 ]

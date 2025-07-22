@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Notifications</title>
+    <title>Corntab Admin Notifications</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,40 +36,30 @@
 
 <body>
     <h1>Admin Dashboard - Live Order Notifications</h1>
-    <a href="{% url 'corntab' %}">ckick here to check corntab</a>
     <div id="notifications">
         <strong>Notifications will appear below:</strong>
     </div>
 
-
-
     <script>
         const notificationsContainer = document.getElementById('notifications');
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/corntab/admin/');
 
-        // Use "admin" as the room name
-        const socket = new WebSocket('ws://' + window.location.host + '/ws/notifications/admin/');
-
-        socket.onopen = function (e) {
+        socket.onopen = function () {
             console.log('WebSocket connection established');
         };
 
         socket.onmessage = function (e) {
             const data = JSON.parse(e.data);
-            console.log("data =", data);
-            console.log("data type =", data.type);
             if (data.type === 'admin_notification') {
                 const message = data.message;
-                console.log('Received message:', message);
-
                 const notificationElement = document.createElement('div');
                 notificationElement.classList.add('notification');
                 notificationElement.innerText = message;
-
                 notificationsContainer.appendChild(notificationElement);
             }
         };
 
-        socket.onclose = function (e) {
+        socket.onclose = function () {
             console.error('WebSocket closed unexpectedly');
         };
     </script>
