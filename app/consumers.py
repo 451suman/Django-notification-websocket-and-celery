@@ -40,18 +40,18 @@ class CorntabConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_name, self.channel_name)
 
-    # async def receive(self, text_data=None, bytes_data=None):
-    #     if text_data:
-    #         data = json.loads(text_data)
-    #         # Do something with data, for example:
-    #         print("Received from frontend:", data)
+    async def receive(self, text_data=None, bytes_data=None):
+        if text_data:
+            data = json.loads(text_data)
+            # Do something with data, for example:
+            print("Received from frontend:", data)
 
-    #         # Optionally, send a response back:
-    #         await self.send(
-    #             text_data=json.dumps(
-    #                 {"type": "response", "message": "Message received!"}
-    #             )
-    #         )
+            # Optionally, send a response back:
+            await self.send(
+                text_data=json.dumps(
+                    {"type": "response", "message": "Message received!"}
+                )
+            )
 
     async def admin_notification(self, event):
         message = event["message"]
